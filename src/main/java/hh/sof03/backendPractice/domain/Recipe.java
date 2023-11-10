@@ -1,9 +1,13 @@
 package hh.sof03.backendPractice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Recipe {
@@ -14,15 +18,42 @@ public class Recipe {
 	private String name;
 	private String description;
 	private String instruction;
-
+	
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name="ingredientId")
+	private Ingredient ingredient;
+	
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name="typeId")
+	private Type type;
 
 public Recipe() {}
 
-public Recipe(String name, String description, String instruction) {
+public Recipe(String name, String description, Ingredient ingredient, String instruction, Type type) {
 	super();
 	this.name = name;
 	this.description = description;
 	this.instruction = instruction;
+	this.ingredient = ingredient;
+	this.type = type;
+}
+
+public Type getType() {
+	return type;
+}
+
+public void setType(Type type) {
+	this.type = type;
+}
+
+public Ingredient getIngredient() {
+	return ingredient;
+}
+
+public void setIngredient(Ingredient ingredient) {
+	this.ingredient = ingredient;
 }
 
 public Long getId() {
@@ -60,7 +91,7 @@ public void setInstruction(String instruction) {
 @Override
 public String toString() {
 	return "Recipe [id=" + id + ", name=" + name + ", description=" + description + ", instruction=" + instruction
-			+ "]";
+			+ ", ingredient=" + ingredient + ", type=" + type + "]";
 }
 
 }

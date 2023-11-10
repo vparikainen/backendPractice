@@ -17,12 +17,16 @@
 			<tr>
 				<th>Name</th>
 				<th>Description</th>
+				<th>Ingredients</th>
 				<th>Instruction</th>
+				<th>Type</th>
 			</tr>
 			<tr th:each="recipe : ${recipes}">
 				<td th:text="${recipe.name}"></td>
 				<td th:text="${recipe.description}"></td>
+				<td th:text="${recipe.ingredient.ingredientName}"></td>
 				<td th:text="${recipe.instruction}"></td>
+				<td th:text="${recipe.type.typeName}"></td>
 			</tr>
 		</table>
 	</div>

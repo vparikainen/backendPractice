@@ -1,9 +1,13 @@
 package hh.sof03.backendPractice.domain;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Ingredient {
@@ -12,12 +16,23 @@ public class Ingredient {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long ingredientId;
 	private String ingredientName;
-
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ingredient")
+	private List<Recipe> recipe;
+	
 public Ingredient() {}
 
 public Ingredient(String ingredientName) {
 	super();
 	this.ingredientName = ingredientName;
+}
+
+public List<Recipe> getRecipe() {
+	return recipe;
+}
+
+public void setRecipe(List<Recipe> recipe) {
+	this.recipe = recipe;
 }
 
 public Long getIngredientId() {
