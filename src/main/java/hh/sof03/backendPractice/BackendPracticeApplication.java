@@ -9,8 +9,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import hh.sof03.backendPractice.domain.Ingredient;
-import hh.sof03.backendPractice.domain.IngredientRepository;
 import hh.sof03.backendPractice.domain.Recipe;
 import hh.sof03.backendPractice.domain.RecipeRepository;
 import hh.sof03.backendPractice.domain.Type;
@@ -26,16 +24,14 @@ public class BackendPracticeApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner recipeDemo(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, TypeRepository typeRepository) {
+	public CommandLineRunner recipeDemo(RecipeRepository recipeRepository, TypeRepository typeRepository) {
 		return(args) -> {
-			Ingredient ingredient1 = new Ingredient("Egg");
-			ingredientRepository.save(ingredient1);
-			
 			Type type1 = new Type("salty");
+			Type type2 = new Type("sweet");
 			typeRepository.save(type1);
+			typeRepository.save(type2);
 			
-			
-			Recipe recipe1 = new Recipe("Boiled egg", "How to make a hard boiled egg.", ingredient1, "1. Boil an egg.", type1);
+			Recipe recipe1 = new Recipe("Boiled egg", "How to make a hard boiled egg.", "egg 1", "1. Boil an egg.", type1);
 			recipeRepository.save(recipe1);
 			
 			log.info("Fetch all the recipes");

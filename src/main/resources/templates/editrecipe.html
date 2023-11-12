@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Recipe App</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+</head>
+
+<body>
+	<h2>Edit Recipe</h2>
+	<div class="container">
+		<form th:object="${recipe}" th:action="@{../save}" action="#" method="post">
+		<input type="hidden" th:field="*{id}" class="form-control"/>
+		<input type="text" th:field="*{name}" />
+		<input type="text" th:field="*{description}" />
+		<input type="text" th:field="*{ingredient}" />
+		<input type="text" th:field="*{instruction}" />
+		<select id="typelist" th:field="*{type}" class="form-control">
+					<option th:each="type: ${types}"
+							th:value="${type.typeId}"
+							th:text="${type.typeName}"></option>
+				</select>
+		<input type="submit" class="btn btn-success" value="Save"></input>
+	</form>
+	</div>
+
+</body>
+
+</html>

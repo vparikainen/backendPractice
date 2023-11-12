@@ -14,15 +14,11 @@ public class Recipe {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private Long recipeId;
 	private String name;
 	private String description;
+	private String ingredient;
 	private String instruction;
-	
-	@ManyToOne
-	@JsonIgnore
-	@JoinColumn(name="ingredientId")
-	private Ingredient ingredient;
 	
 	@ManyToOne
 	@JsonIgnore
@@ -31,7 +27,7 @@ public class Recipe {
 
 public Recipe() {}
 
-public Recipe(String name, String description, Ingredient ingredient, String instruction, Type type) {
+public Recipe(String name, String description, String ingredient, String instruction, Type type) {
 	super();
 	this.name = name;
 	this.description = description;
@@ -48,20 +44,20 @@ public void setType(Type type) {
 	this.type = type;
 }
 
-public Ingredient getIngredient() {
+public String getIngredient() {
 	return ingredient;
 }
 
-public void setIngredient(Ingredient ingredient) {
+public void setIngredient(String ingredient) {
 	this.ingredient = ingredient;
 }
 
-public Long getId() {
-	return id;
+public Long getRecipeId() {
+	return recipeId;
 }
 
-public void setId(Long id) {
-	this.id = id;
+public void setId(Long recipeId) {
+	this.recipeId = recipeId;
 }
 
 public String getName() {
@@ -90,7 +86,7 @@ public void setInstruction(String instruction) {
 
 @Override
 public String toString() {
-	return "Recipe [id=" + id + ", name=" + name + ", description=" + description + ", instruction=" + instruction
+	return "Recipe [recipeId=" + recipeId + ", name=" + name + ", description=" + description + ", instruction=" + instruction
 			+ ", ingredient=" + ingredient + ", type=" + type + "]";
 }
 

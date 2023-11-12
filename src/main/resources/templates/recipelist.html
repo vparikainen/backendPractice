@@ -24,12 +24,16 @@
 			<tr th:each="recipe : ${recipes}">
 				<td th:text="${recipe.name}"></td>
 				<td th:text="${recipe.description}"></td>
-				<td th:text="${recipe.ingredient.ingredientName}"></td>
+				<td th:text="${recipe.ingredient}"></td>
 				<td th:text="${recipe.instruction}"></td>
 				<td th:text="${recipe.type.typeName}"></td>
+				<td><a th:href="@{/delete/{id}(id=${recipe.recipeId})}" class="btn btn-danger">Delete</a></td>
+				<td><a th:href="@{/edit/{id}(id=${recipe.recipeId})}" class="btn btn-danger">Edit</a></td>
 			</tr>
 		</table>
+		<a href="/add" class="btn btn-primary">Add Recipe</a>
 	</div>
+	
 </body>
 
 </html>
