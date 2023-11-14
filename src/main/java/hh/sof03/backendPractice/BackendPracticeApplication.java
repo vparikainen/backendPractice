@@ -1,7 +1,5 @@
 package hh.sof03.backendPractice;
 
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -13,6 +11,8 @@ import hh.sof03.backendPractice.domain.Recipe;
 import hh.sof03.backendPractice.domain.RecipeRepository;
 import hh.sof03.backendPractice.domain.Type;
 import hh.sof03.backendPractice.domain.TypeRepository;
+import hh.sof03.backendPractice.domain.User;
+import hh.sof03.backendPractice.domain.UserRepository;
 
 @SpringBootApplication
 public class BackendPracticeApplication {
@@ -24,8 +24,13 @@ public class BackendPracticeApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner recipeDemo(RecipeRepository recipeRepository, TypeRepository typeRepository) {
+	public CommandLineRunner recipeDemo(RecipeRepository recipeRepository, TypeRepository typeRepository, UserRepository userRepository) {
 		return(args) -> {
+			User user1 = new User("user", "$2a$10$RzYskoztN1v1G7WnrVl.LeM9VwA7NaxOrwOLbYgyu4ymehHODTEaq", "USER");
+			User user2 = new User("admin", "$2a$10$rqmyFj6hq8LQazpLS.AMue8jwcvWF2W4CiPlV6Jn0B5mysHRq9BDa", "ADMIN");
+			userRepository.save(user1);
+			userRepository.save(user2);
+			
 			Type type1 = new Type("salty");
 			Type type2 = new Type("sweet");
 			typeRepository.save(type1);

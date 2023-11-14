@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
 	<title>Recipelist</title>
@@ -9,9 +10,28 @@
 
 <body>
 	<div class="container">
-		<div class="col-md-4">
+		<div class="row">
+			<div class="col-md-4">
 			<h1>Recipes</h1>
 		</div>
+		<div class="col-md-4">
+		<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
+			<h3>Logged in as <span sec:authentication="name"></span></h3>
+		</div>
+	</div>
+	<div class="btn-group" role="group" aria-label="Basic example">
+		<form th:action="@{/login}" method="post">
+			<input type="submit" value="Log in" class="btn btn-primary"/>
+		</form>
+		<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
+	</div>
+		</div>
+		
+	
 
 		<table class="table table-striped">
 			<tr>
@@ -27,11 +47,15 @@
 				<td th:text="${recipe.ingredient}"></td>
 				<td th:text="${recipe.instruction}"></td>
 				<td th:text="${recipe.type.typeName}"></td>
-				<td><a th:href="@{/delete/{id}(id=${recipe.recipeId})}" class="btn btn-danger">Delete</a></td>
-				<td><a th:href="@{/edit/{id}(id=${recipe.recipeId})}" class="btn btn-danger">Edit</a></td>
+				<td sec:authorize="hasAuthority('ADMIN')"><a 
+				th:href="@{/delete/{id}(id=${recipe.recipeId})}" class="btn btn-danger">Delete</a></td>
+				<td sec:authorize="hasAuthority('ADMIN')"><a 
+				th:href="@{/edit/{id}(id=${recipe.recipeId})}" class="btn btn-danger">Edit</a></td>
 			</tr>
 		</table>
-		<a href="/add" class="btn btn-primary">Add Recipe</a>
+		<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
+			<a href="/add" class="btn btn-primary">Add Recipe</a>
+		</div>
 	</div>
 	
 </body>

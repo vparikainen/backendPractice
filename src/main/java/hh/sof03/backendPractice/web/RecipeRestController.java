@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +30,12 @@ public class RecipeRestController {
 	@GetMapping(value="/recipes/{id}")
 	public @ResponseBody Optional<Recipe> findRecipeRest(@PathVariable("id") Long recipeId) {
 		return recipeRepository.findById(recipeId);
+	}
+	
+	// RESTFUL service to save new recipe
+	@PostMapping(value="/recipes")
+	public @ResponseBody Recipe saveRecipe(@RequestBody Recipe recipe) {
+		return recipeRepository.save(recipe);
 	}
 
 }
