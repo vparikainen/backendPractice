@@ -3,7 +3,7 @@
 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
-	<title>Recipelist</title>
+	<title th:text="#{recipeapp}"></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
 </head>
@@ -12,22 +12,36 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
-			<h1>Recipes</h1>
+			<h1 th:text="#{recipes}"></h1>
 		</div>
-		<div class="col-md-4">
-		<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
-			<h3>Logged in as <span sec:authentication="name"></span></h3>
-		</div>
-	</div>
 	<div class="btn-group" role="group" aria-label="Basic example">
 		<form th:action="@{/login}" method="post">
-			<input type="submit" value="Log in" class="btn btn-primary"/>
+			<input type="submit" th:value="#{login}" class="btn btn-primary"/>
 		</form>
 		<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
 		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+			<input type="submit" th:value="#{signout}" class="btn btn-sm btn-danger"/>
 		</form>
 	</div>
+	<span th:text="#{lang.change}"></span>:
+	<select id="locales">
+		<option value=""></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+		<option value="fin" th:text="#{lang.fin}"></option>
+	</select>
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">	
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function() {
+				let selectedOption = $('#locales').val();
+				if (selectedOption != '') {
+					window.location.replace('recipelist?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 	</div>
 		</div>
 		
@@ -35,11 +49,11 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 		<table class="table table-striped">
 			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Ingredients</th>
-				<th>Instruction</th>
-				<th>Type</th>
+				<th th:text="#{name}">Name</th>
+				<th th:text="#{desc}">Description</th>
+				<th th:text="#{ingr}">Ingredients</th>
+				<th th:text="#{instr}">Instruction</th>
+				<th th:text="#{type}">Type</th>
 			</tr>
 			<tr th:each="recipe : ${recipes}">
 				<td th:text="${recipe.name}"></td>
@@ -48,13 +62,13 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 				<td th:text="${recipe.instruction}"></td>
 				<td th:text="${recipe.type.typeName}"></td>
 				<td sec:authorize="hasAuthority('ADMIN')"><a 
-				th:href="@{/delete/{id}(id=${recipe.recipeId})}" class="btn btn-danger">Delete</a></td>
+				th:href="@{/delete/{id}(id=${recipe.recipeId})}" class="btn btn-danger" th:text="#{delete}"></a></td>
 				<td sec:authorize="hasAuthority('ADMIN')"><a 
-				th:href="@{/edit/{id}(id=${recipe.recipeId})}" class="btn btn-danger">Edit</a></td>
+				th:href="@{/edit/{id}(id=${recipe.recipeId})}" class="btn btn-danger" th:text="#{edit}"></a></td>
 			</tr>
 		</table>
 		<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
-			<a href="/add" class="btn btn-primary">Add Recipe</a>
+			<a href="/add" class="btn btn-primary" th:text="#{add}"></a>
 		</div>
 	</div>
 	

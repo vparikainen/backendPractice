@@ -56,7 +56,7 @@ public Long getRecipeId() {
 	return recipeId;
 }
 
-public void setId(Long recipeId) {
+public void setRecipeId(Long recipeId) {
 	this.recipeId = recipeId;
 }
 

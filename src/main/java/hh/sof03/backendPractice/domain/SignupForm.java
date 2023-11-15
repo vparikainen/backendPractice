@@ -18,7 +18,7 @@ public class SignupForm {
 	private String passwordCheck = "";
 	
 	@NotEmpty
-	String role = "USER";
+	private String role = "USER";
 
 	public String getUsername() {
 		return username;

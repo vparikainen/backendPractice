@@ -1,6 +1,7 @@
 package hh.sof03.backendPractice.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class RecipeController {
 	
 	// add new recipe
 	@RequestMapping(value="/add")
+	@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 	public String addRecipe(Model model) {
 		model.addAttribute("recipe", new Recipe());
 		model.addAttribute("types", typeRepository.findAll());
@@ -37,13 +39,15 @@ public class RecipeController {
 	
 	// save new recipe
 	@PostMapping(value="/save")
+	@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 	public String save(Recipe recipe) {
 		recipeRepository.save(recipe);
-		return "redirect:recipelist";
+		return "redirect:/recipelist";
 	}
 	
 	// delete recipe by id
 	@GetMapping(value="/delete/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteRecipe(@PathVariable("id") Long recipeId, Model model) {
 		recipeRepository.deleteById(recipeId);
 		return "redirect:/recipelist";
@@ -51,6 +55,7 @@ public class RecipeController {
 	
 	// edit recipe
 	@RequestMapping(value="/edit/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String editRecipe(@PathVariable("id") Long recipeId, Model model) {
 		model.addAttribute("recipe", recipeRepository.findById(recipeId));
 		model.addAttribute("types", typeRepository.findAll());
