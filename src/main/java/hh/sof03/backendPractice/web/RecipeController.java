@@ -24,7 +24,7 @@ public class RecipeController {
 	private TypeRepository typeRepository;
 
 	// show all recipes
-	@GetMapping(value = "/recipelist")
+	@GetMapping(value = {"/", "/recipelist"})
 	public String getRecipes(Model model) {
 		model.addAttribute("recipes", recipeRepository.findAll());
 		return "recipelist";

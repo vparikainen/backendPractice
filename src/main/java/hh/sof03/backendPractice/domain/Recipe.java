@@ -22,12 +22,12 @@ public class Recipe {
 	
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name="typeId")
+	@JoinColumn(name="type_id")
 	private Type type;
 	
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name="userId")
+	@JoinColumn(name="user_id")
 	private User user;
 
 public Recipe() {}

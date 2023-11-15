@@ -9,8 +9,48 @@
 </head>
 
 <body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<a class="navbar-brand" href="/recipelist" th:text="#{recipes}"></a>
+		<div class="container">
+			<div class="row">
+				<div class="btn-group mr-3" role="group" aria-label="Basic example">
+					<span th:text="#{lang.change}" class="navbar-text"></span>
+					<select id="locales">
+						<option value=""></option>
+						<option value="en" th:text="#{lang.eng}"></option>
+						<option value="fin" th:text="#{lang.fin}"></option>
+					</select>
+					<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+					</script>
+					<script type="text/javascript">
+						$(document).ready(function () {
+							$("#locales").change(function () {
+								let selectedOption = $('#locales').val();
+								if (selectedOption != '') {
+									window.location.replace('signup?lang=' + selectedOption);
+								}
+							});
+						});
+					</script>
+				</div>
+				<div class="ml-auto">
+					<div sec:authorize="!isAuthenticated()">
+						<form th:action="@{/login}" method="post" class="d-inline-block mr-2">
+							<input type="submit" th:value="#{login}" class="btn btn-sm btn-light navbar-btn" />
+						</form>
+					</div>
+
+					<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')" class="d-inline-block">
+						<form th:action="@{/logout}" method="post" class="ml-2">
+							<input type="submit" th:value="#{signout}" class="btn btn-sm btn-danger navbar-btn" />
+						</form>
+					</div>
+				</div>
+			</div>
+	</nav>
+	
 	<div class="container">
-		<h1 th:text="#{signup}"></h1>
+		<h2 th:text="#{signup}"></h2>
 		<div class="col-md-4">
 			<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
 				<div>

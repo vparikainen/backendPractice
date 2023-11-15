@@ -9,68 +9,71 @@
 
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		<a class="navbar-brand" href="#" th:text="#{recipes}"></a>
-	<div class="container">
-		<div class="row">
-			<div class="btn-group mr-3" role="group" aria-label="Basic example">
-				<span th:text="#{lang.change}" class="navbar-text"></span>
-				<select id="locales">
-					<option value=""></option>
-					<option value="en" th:text="#{lang.eng}"></option>
-					<option value="fin" th:text="#{lang.fin}"></option>
-				</select>
-				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-				</script>
-				<script type="text/javascript">
-					$(document).ready(function () {
-						$("#locales").change(function () {
-							let selectedOption = $('#locales').val();
-							if (selectedOption != '') {
-								window.location.replace('recipelist?lang=' + selectedOption);
-							}
+		<a class="navbar-brand" href="/recipelist" th:text="#{recipes}"></a>
+		<div class="container">
+			<div class="row">
+				<div class="btn-group mr-3" role="group" aria-label="Basic example">
+					<span th:text="#{lang.change}" class="navbar-text"></span>
+					<select id="locales">
+						<option value=""></option>
+						<option value="en" th:text="#{lang.eng}"></option>
+						<option value="fin" th:text="#{lang.fin}"></option>
+					</select>
+					<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+					</script>
+					<script type="text/javascript">
+						$(document).ready(function () {
+							$("#locales").change(function () {
+								let selectedOption = $('#locales').val();
+								if (selectedOption != '') {
+									window.location.replace('recipelist?lang=' + selectedOption);
+								}
+							});
 						});
-					});
-				</script>
-			</div>
-			<div class="ml-auto">
-				<form th:action="@{/login}" method="post" class="d-inline-block mr-2">
-					<input type="submit" th:value="#{login}" class="btn btn-sm btn-light navbar-btn" />
-				</form>
-				<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')" class="d-inline-block">
-					<form th:action="@{/logout}" method="post" class="ml-2">
-						<input type="submit" th:value="#{signout}" class="btn btn-sm btn-danger navbar-btn" />
-					</form>
+					</script>
+				</div>
+				<div class="ml-auto">
+					<div sec:authorize="!isAuthenticated()">
+						<form th:action="@{/login}" method="post" class="d-inline-block mr-2">
+							<input type="submit" th:value="#{login}" class="btn btn-sm btn-light navbar-btn" />
+						</form>
+					</div>
+
+					<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')" class="d-inline-block">
+						<form th:action="@{/logout}" method="post" class="ml-2">
+							<input type="submit" th:value="#{signout}" class="btn btn-sm btn-danger navbar-btn" />
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>		
 	</nav>
 
-
-
-
-		<table class="table table-striped">
-			<tr>
-				<th th:text="#{name}">Name</th>
-				<th th:text="#{desc}">Description</th>
-				<th th:text="#{ingr}">Ingredients</th>
-				<th th:text="#{instr}">Instruction</th>
-				<th th:text="#{type}">Type</th>
-			</tr>
-			<tr th:each="recipe : ${recipes}">
-				<td th:text="${recipe.name}"></td>
-				<td th:text="${recipe.description}"></td>
-				<td th:text="${recipe.ingredient}"></td>
-				<td th:text="${recipe.instruction}"></td>
-				<td th:text="${recipe.type.typeName}"></td>
-				<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${recipe.recipeId})}"
-						class="btn btn-secondary" th:text="#{edit}"></a></td>
-				<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${recipe.recipeId})}"
-						class="btn btn-danger" th:text="#{delete}"></a></td>
-			</tr>
-		</table>
-		<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
-			<a href="/add" class="btn btn-primary" th:text="#{add}"></a>
-		</div>
+	<table class="table table-striped">
+		<tr>
+			<th th:text="#{name}">Name</th>
+			<th th:text="#{desc}">Description</th>
+			<th th:text="#{ingr}">Ingredients</th>
+			<th th:text="#{instr}">Instruction</th>
+			<th th:text="#{type}">Type</th>
+		</tr>
+		<tr th:each="recipe : ${recipes}">
+			<td th:text="${recipe.name}"></td>
+			<td th:text="${recipe.description}"></td>
+			<td th:text="${recipe.ingredient}"></td>
+			<td th:text="${recipe.instruction}"></td>
+			<td th:text="${recipe.type.typeName}"></td>
+			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${recipe.recipeId})}"
+					class="btn btn-secondary" th:text="#{edit}"></a></td>
+			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${recipe.recipeId})}"
+					class="btn btn-danger" th:text="#{delete}"></a></td>
+		</tr>
+	</table>
+	<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
+		<a href="/add" class="btn btn-primary" th:text="#{add}"></a>
+	</div>
+	<div sec:authorize="hasAuthority('ADMIN')">
+		<a href="/typelist" class="btn btn-secondary" th:text="#{typelist}"></a>
+	</div>
 	</div>
 
 </body>

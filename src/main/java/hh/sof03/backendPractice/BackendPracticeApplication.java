@@ -6,12 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-
-import java.util.Locale;
 
 import hh.sof03.backendPractice.domain.Recipe;
 import hh.sof03.backendPractice.domain.RecipeRepository;
@@ -40,14 +34,18 @@ public class BackendPracticeApplication {
 
 			Type type1 = new Type("salty");
 			Type type2 = new Type("sweet");
+			Type type3 = new Type("beverage");
 			typeRepository.save(type1);
 			typeRepository.save(type2);
+			typeRepository.save(type3);
 
 			Recipe recipe1 = new Recipe("Boiled egg", "How to make a hard boiled egg.", "egg", "1. Boil the egg.",
 					type1, user2);
 			Recipe recipe2 = new Recipe("Fried egg", "How to fry an egg.", "egg", "Fry the egg.", type1, user1);
+			Recipe recipe3 = new Recipe("Hot cocoa", "Delicious homemade hot cocoa.", "Cocoa powder, Sugar, Chocolate, Milk, Heavy Cream, Vanilla extract", "1. In a saucepan, whisk together sugar & cocoa powder. 2. Add milk and cream (in 1:1 ratio), chocolate chunks & vanilla. 3. Serve with your favourite toppings.", type3, user1);
 			recipeRepository.save(recipe1);
 			recipeRepository.save(recipe2);
+			recipeRepository.save(recipe3);
 
 			log.info("Fetch all the recipes");
 			for (Recipe recipe : recipeRepository.findAll()) {
