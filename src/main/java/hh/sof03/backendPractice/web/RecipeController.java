@@ -1,7 +1,9 @@
 package hh.sof03.backendPractice.web;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,10 +49,29 @@ public class RecipeController {
 	
 	// delete recipe by id
 	@GetMapping(value="/delete/{id}")
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public String deleteRecipe(@PathVariable("id") Long recipeId, Model model) {
-		recipeRepository.deleteById(recipeId);
+	public String deleteRecipe(@PathVariable("id") Long recipeId, Model model, Authentication authentication) {
+		Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+		
+		if(recipeOptional.isPresent()) {
+			Recipe recipe = recipeOptional.get();
+			
+			boolean isAdmin = authentication.getAuthorities().stream()
+					.anyMatch(role -> role.getAuthority().equals("ADMIN"));
+			
+			if (isAdmin || isUserAllowed(authentication.getName(), recipe)) {
+				recipeRepository.delete(recipe);
+			} else {
+				return "redirect:/recipelist";
+			}
+			
+			}else {
+				return "redirect:/recipelist";
+		}
 		return "redirect:/recipelist";
+	}
+	
+	private boolean isUserAllowed(String username, Recipe recipe) {
+		return username.equals(recipe.getUser().getUsername());
 	}
 	
 	// edit recipe

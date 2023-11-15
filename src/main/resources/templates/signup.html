@@ -1,23 +1,24 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
-	<title>Recipe App</title>
+	<title th:text="#{recipeapp}"></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
 </head>
 
 <body>
 	<div class="container">
-		<h1>Sign up</h1>
+		<h1 th:text="#{signup}"></h1>
 		<div class="col-md-4">
 			<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
 				<div>
-					<label> Username :<input type="text" th:field="*{username}" class="form-control" /></label>
+					<label>Username: <input type="text" th:field="*{username}" class="form-control" /></label>
 					<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
 				</div>
 				<div>
-					<label> Password :<input type="password" th:field="*{password}" class="form-control" /></label>
+					<label>Password: <input type="password" th:field="*{password}" class="form-control" /></label>
 					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
 				</div>
 				<div>
@@ -27,9 +28,13 @@
 					</p>
 				</div>
 
-				<input type="submit" class="btn btn-primary" value="Sign up"></input>
+				<input type="submit" class="btn btn-primary" th:value="#{signup}"></input>
 			</form>
+			<form th:action="@{/login}" method="post" class="d-inline-block mr-2">
+					<input type="submit" th:value="#{login}" class="btn btn-secondary navbar-btn" />
+				</form>
 		</div>
+		
 	</div>
 </body>
 

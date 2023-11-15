@@ -43,9 +43,11 @@ public class BackendPracticeApplication {
 			typeRepository.save(type1);
 			typeRepository.save(type2);
 
-			Recipe recipe1 = new Recipe("Boiled egg", "How to make a hard boiled egg.", "egg 1", "1. Boil an egg.",
-					type1);
+			Recipe recipe1 = new Recipe("Boiled egg", "How to make a hard boiled egg.", "egg", "1. Boil the egg.",
+					type1, user2);
+			Recipe recipe2 = new Recipe("Fried egg", "How to fry an egg.", "egg", "Fry the egg.", type1, user1);
 			recipeRepository.save(recipe1);
+			recipeRepository.save(recipe2);
 
 			log.info("Fetch all the recipes");
 			for (Recipe recipe : recipeRepository.findAll()) {

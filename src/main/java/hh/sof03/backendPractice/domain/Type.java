@@ -18,7 +18,7 @@ public class Type {
 	private String typeName;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
-	private List<Recipe> recipe;
+	private List<Recipe> recipes;
 
 	public Type() {}
 
@@ -27,12 +27,12 @@ public class Type {
 		this.typeName = typeName;
 	}
 
-	public List<Recipe> getRecipe() {
-		return recipe;
+	public List<Recipe> getRecipes() {
+		return recipes;
 	}
 
-	public void setRecipe(List<Recipe> recipe) {
-		this.recipe = recipe;
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
 	}
 
 	public Long getTypeId() {

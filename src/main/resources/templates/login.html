@@ -4,6 +4,7 @@
 
 <head>
 	<title th:text="#{recipeapp}"></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
 </head>
 
@@ -11,16 +12,18 @@
 	<div class="container">
 		<h1 th:text="#{login}"></h1>
 		<div class="col-md-4 col-md-offset-4">
-			<div class="alert alert-danger" th:if="${param.error}" th:text="#{login.err}">
+			<div class="alert alert-danger" th:if="${param.error != null}" th:text="#{login.err}">
 			</div>
 			<div class="alert alert-warning" th:if="${param.logout}" th:text="#{logout.mess}">
 			</div>
-			<form th:action="@{/login}" method="post">
-				<div><label th:tex="username"> Username : <input type="text" name="username" class="form-control" /> </label></div>
-				<div><label> Password: <input type="password" name="password" class="form-control" /> </label></div>
+			<form th:action="@{/login}" action="#" method="post">
+				<div><label >Username: <input type="text" name="username" class="form-control" /> </label></div>
+				<div><label > Password: <input type="password" name="password" class="form-control" /> </label></div>
 				<div><input type="submit" value="Sign In" class="btn btn-primary" /></div>
 			</form>
-			<a th:href="@{/signup}">Sign up</a>
+			<form action="#" th:action="@{/signup}" method="get">
+				<button type="submit" class="btn btn-secondary" th:text="#{signup}"></button>
+			</form>
 		</div>
 	</div>
 </body>

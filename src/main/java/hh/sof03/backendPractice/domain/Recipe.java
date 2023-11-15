@@ -24,16 +24,22 @@ public class Recipe {
 	@JsonIgnore
 	@JoinColumn(name="typeId")
 	private Type type;
+	
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name="userId")
+	private User user;
 
 public Recipe() {}
 
-public Recipe(String name, String description, String ingredient, String instruction, Type type) {
+public Recipe(String name, String description, String ingredient, String instruction, Type type, User user) {
 	super();
 	this.name = name;
 	this.description = description;
 	this.instruction = instruction;
 	this.ingredient = ingredient;
 	this.type = type;
+	this.user = user;
 }
 
 public Type getType() {
@@ -84,10 +90,18 @@ public void setInstruction(String instruction) {
 	this.instruction = instruction;
 }
 
+public User getUser() {
+	return user;
+}
+
+public void setUser(User user) {
+	this.user = user;
+}
+
 @Override
 public String toString() {
 	return "Recipe [recipeId=" + recipeId + ", name=" + name + ", description=" + description + ", instruction=" + instruction
-			+ ", ingredient=" + ingredient + ", type=" + type + "]";
+			+ ", ingredient=" + ingredient + ", type=" + type + ", + user=" + user + "]";
 }
 
 }
