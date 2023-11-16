@@ -60,8 +60,7 @@
 				<div><label > Password: <input type="password" name="password" class="form-control" /> </label></div>
 				<div><input type="submit" value="Sign In" class="btn btn-primary" /></div>
 			</form>
-			<form action="#" th:action="@{/signup}" method="get">
-				<button type="submit" class="btn btn-secondary" th:text="#{signup}"></button>
+			<a th:href="@{/signup}" class="btn btn-secondary" th:text="#{signup}"></a>
 			</form>
 		</div>
 	</div>

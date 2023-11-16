@@ -22,45 +22,47 @@ import hh.sof03.backendPractice.domain.UserRepository;
 public class UserController {
 	@Autowired
 	private UserRepository userRepository;
-	
-	@RequestMapping(value="/login")
+
+	@RequestMapping(value = "/login")
 	public String login() {
 		return "login";
 	}
-	
-	@RequestMapping(value="/signup")
+
+	@RequestMapping(value = "/signup")
 	public String signup(Model model) {
 		model.addAttribute("signupform", new SignupForm());
 		return "signup";
 	}
-	
+
 	// create a new user
-	@PostMapping(value="/saveuser")
+	@PostMapping(value = "/saveuser")
 	public String save(@Valid @ModelAttribute("signupform") SignupForm signupForm, BindingResult bindingResult) {
-		if (!bindingResult.hasErrors()) {
-			if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) {
-				String pswd = signupForm.getPassword();
-				BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-				String hashPswd = bc.encode(pswd);
-				
-				User newUser = new User();
-				newUser.setPasswordHash(hashPswd);
-				newUser.setUsername(signupForm.getUsername());
-				newUser.setRole("USER");
-				if (userRepository.findByUsername(signupForm.getUsername()) == null) {
-					userRepository.save(newUser);
-				} else {
-					bindingResult.rejectValue("username", "err.username", "Username already exists");
-					return "signup";
-				}
-			} else {
-				bindingResult.rejectValue("passwordCheck", "err.passCheck", "Password doesn't match");
-				return "signup";
-			}
-		} else {
+		if (bindingResult.hasErrors()) {
 			return "signup";
 		}
-		return "redirect:/login";
+
+		if (!signupForm.getPassword().equals(signupForm.getPasswordCheck())) {
+			bindingResult.rejectValue("passwordCheck", "err.passCheck", "Password doesn't match");
+			return "signup";
+		}
+
+		User existingUser = userRepository.findByUsername(signupForm.getUsername());
+		if (existingUser != null) {
+			bindingResult.rejectValue("username", "err.username", "Username already exists");
+			return "signup";
+		}
+
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(signupForm.getPassword());
+
+		User newUser = new User();
+		newUser.setPasswordHash(hashedPassword);
+		newUser.setUsername(signupForm.getUsername());
+		newUser.setRole("USER");
+
+		userRepository.save(newUser);
+
+		return "redirect:/login"; // Redirect only if user is saved successfully
 	}
 
 }
