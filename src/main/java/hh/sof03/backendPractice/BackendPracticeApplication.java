@@ -42,10 +42,12 @@ public class BackendPracticeApplication {
 			Recipe recipe1 = new Recipe("Boiled egg", "How to make a hard boiled egg.", "egg", "1. Boil the egg.",
 					type1, user2);
 			Recipe recipe2 = new Recipe("Fried egg", "How to fry an egg.", "egg", "Fry the egg.", type1, user1);
-			Recipe recipe3 = new Recipe("Hot cocoa", "Delicious homemade hot cocoa.", "Cocoa powder, Sugar, Chocolate, Milk, Heavy Cream, Vanilla extract", "1. In a saucepan, whisk together sugar & cocoa powder. 2. Add milk and cream (in 1:1 ratio), chocolate chunks & vanilla. 3. Serve with your favourite toppings.", type3, user1);
+			Recipe recipe3 = new Recipe("Hot cocoa", "Delicious homemade hot cocoa.", "Cocoa powder, Sugar, Chocolate, Milk, Heavy Cream, Vanilla extract", "1. In a saucepan, whisk together sugar and cocoa powder.  2. Add milk and cream (in 1:1 ratio), chocolate chunks and vanilla. 3. Serve with your favourite toppings.", type3, user1);
+			Recipe recipe4 = new Recipe("Vanilla mug cake","Quick and easy yet delicious treat!","Flour, Sugar, Baking Powder, Dash Salt, Butter, Milk, Vanilla, Sprinkles","1. Add dry ingredients to a microwave safe mug. 2. Stir in the wet ingredients. Add sprinkles if desired. 3. Microwave for 70-90 seconds.", type2, user2);
 			recipeRepository.save(recipe1);
 			recipeRepository.save(recipe2);
 			recipeRepository.save(recipe3);
+			recipeRepository.save(recipe4);
 
 			log.info("Fetch all the recipes");
 			for (Recipe recipe : recipeRepository.findAll()) {
